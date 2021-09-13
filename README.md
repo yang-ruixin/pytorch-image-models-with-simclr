@@ -6,7 +6,7 @@ This repository is used for (multi-label) classification. <br>
 The code is based on another repo on mine [PyTorch Image Models Multi Label Classification](https://github.com/yang-ruixin/PyTorch-Image-Models-Multi-Label-Classification), which further based on [Pytorch Image Models by Ross Wightman](https://github.com/rwightman/pytorch-image-models). <br>
 Thank Ross for his great work.
 
-The folder ./simclr is from [Spijkervet/SimCLR](https://github.com/Spijkervet/SimCLR). Thank Janne Spijkervet. <br>
+The loss function NT_Xent defined in folder ./simclr is from [Spijkervet/SimCLR](https://github.com/Spijkervet/SimCLR). Thank Janne Spijkervet. <br>
 The main reference for multi-label classification is [this website](https://learnopencv.com/multi-label-image-classification-with-pytorch/). Thank Dmitry Retinskiy and Satya Mallick. <br>
 For the purpose of understanding our context and the dataset, please spend 5 minutes on reading the [link](https://learnopencv.com/multi-label-image-classification-with-pytorch/), though you don’t need to read the specific code there. <br>
 [Here is the link to download the images.](https://www.kaggle.com/paramaggarwal/fashion-product-images-small) <br>
@@ -42,16 +42,16 @@ The training process of experiment 20210910-211332-efficientnet_b0-224 is shown 
 ![image](imgs/20210910-211332-efficientnet_b0-224.jpg) <br>
 ![image](imgs/20210910-211332-efficientnet_b0-224-trainingProcessAccLoss.png) <br>
 ![image](imgs/20210910-211332-efficientnet_b0-224-trainingProcessLosses.png) <br>
-In case you have a large amount of unlabelled data, do what the paper says, train SimCLR first, and then train a classifier, which means learn from few labelled data.
+In case you have a large amount of unlabelled data, do what the paper says, train SimCLR first, and then train a classifier, which means you could learn from few labelled data.
 
 ## Command Example
 Here is a command example to start to train: <br>
 ```
-./distributed_train.sh 1 ./fashion-product-images/ --model efficientnet_b0 -b 32 --sched cosine --epochs 100 --decay-epochs 2.4 --decay-rate .97 --opt adamp --opt-eps .001 -j 8 --warmup-lr 1e-6 --weight-decay 1e-5 --drop 0.3 --drop-connect 0.2 --model-ema --model-ema-decay 0.9999 --aa rand-m9-mstd0.5 --remode pixel --reprob 0.2 --amp --lr .016 --pretrained -wls 0.1 -wlc 0.9 
+./distributed_train.sh 1 ./fashion-product-images/ --model efficientnet_b0 -b 32 --sched cosine --epochs 100 --decay-epochs 2.4 --decay-rate .97 --opt adamp --opt-eps .001 -j 8 --warmup-lr 1e-6 --weight-decay 1e-5 --drop 0.3 --drop-connect 0.2 --model-ema --model-ema-decay 0.9999 --aa rand-m9-mstd0.5 --remode pixel --reprob 0.2 --amp --lr .016 --pretrained -wls 0.1 -wlc 0.9  
 ```
 And a command example to start to validate: <br>
 ```
-python validate.py ./fashion-product-images/ --model efficientnet_b0 --checkpoint ./output/train/YOUR_SPECIFIC_FOLDER/model_best.pth.tar -b 32 
+python validate.py ./fashion-product-images/ --model efficientnet_b0 --checkpoint ./output/train/YOUR_SPECIFIC_FOLDER/model_best.pth.tar -b 32  
 ```
 Please give a star if you find this repo helpful.
 
